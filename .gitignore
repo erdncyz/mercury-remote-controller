@@ -1,0 +1,204 @@
+# Mercury Remote Controller - .gitignore
+
+# ===== DOCKER & CONTAINERS =====
+# Docker volumes and data
+postgres_data/
+docker-data/
+*.sqlite
+*.db
+
+# Docker logs
+docker-compose.override.yml
+docker-compose.*.yml
+!docker-compose.yml
+
+# ===== DATABASE =====
+# PostgreSQL data files
+*.sql
+*.dump
+*.backup
+*.bak
+
+# Database initialization files (keep only the template)
+init/*.sql
+!init/initdb.sql
+
+# ===== LOGS =====
+# Application logs
+logs/
+*.log
+*.log.*
+log/
+
+# Docker logs
+docker-logs/
+container-logs/
+
+# ===== TEMPORARY FILES =====
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ===== IDE & EDITOR FILES =====
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.vim
+.vimrc
+
+# ===== ENVIRONMENT & CONFIGURATION =====
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Configuration files with sensitive data
+config/local.json
+config/production.json
+secrets.json
+credentials.json
+
+# ===== SSL & CERTIFICATES =====
+# SSL certificates and keys
+ssl/
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# ===== BACKUP & ARCHIVE =====
+# Backup files
+*.tar
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# ===== NETWORK & DISCOVERY =====
+# Network scan results
+network-scan-*.txt
+discovery-*.log
+hosts.txt
+
+# ===== GUACAMOLE SPECIFIC =====
+# Guacamole recordings
+recordings/
+*.guac
+
+# Guacamole drive
+drive/
+guacamole-drive/
+
+# ===== NGINX =====
+# Nginx logs and cache
+nginx/logs/
+nginx/cache/
+nginx/temp/
+
+# ===== SYSTEM FILES =====
+# macOS
+.AppleDouble
+.LSOverride
+
+# Windows
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ===== DEVELOPMENT =====
+# Node.js (if any development tools are used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if any scripts are used)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ===== MONITORING & METRICS =====
+# Performance monitoring
+*.perf
+*.profile
+*.trace
+
+# ===== CUSTOM PROJECT FILES =====
+# Project specific temporary files
+temp/
+tmp/
+cache/
+build/
+dist/
+
+# ===== VERSION CONTROL =====
+# Git
+.git/
+.gitignore~
+
+# ===== DOCUMENTATION =====
+# Generated documentation
+docs/build/
+docs/_build/
+
+# ===== TESTING =====
+# Test results and coverage
+coverage/
+.coverage
+*.coverage
+test-results/
+junit.xml
+
+# ===== DEPLOYMENT =====
+# Deployment artifacts
+deploy/
+releases/
+*.war
+*.jar
+
+# ===== SECURITY =====
+# Security scan results
+security-scan-*.txt
+vulnerability-*.log
+
+# ===== PERFORMANCE =====
+# Performance test results
+performance-*.log
+load-test-*.txt 

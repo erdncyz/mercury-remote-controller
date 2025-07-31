@@ -5,6 +5,16 @@
 
 set -e
 
+# Load environment variables
+if [ -f .env ]; then
+    export $(cat .env | grep -v '^#' | xargs)
+fi
+
+# Default values if .env is not loaded
+GUACAMOLE_PORT=${GUACAMOLE_PORT:-8080}
+GUACAMOLE_ADMIN_USER=${GUACAMOLE_ADMIN_USER:-guacadmin}
+GUACAMOLE_ADMIN_PASSWORD=${GUACAMOLE_ADMIN_PASSWORD:-guacadmin}
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -63,28 +73,50 @@ discover_network() {
     ./scripts/network-discovery.sh
 }
 
+# Function to get device IP address
+get_device_ip() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "localhost"
+    else
+        hostname -I | awk '{print $1}' 2>/dev/null || echo "localhost"
+    fi
+}
+
 # Function to display connection information
 show_connection_info() {
+    local device_ip=$(get_device_ip)
+    
     echo
     echo "=========================================="
     echo "☿ Mercury Remote Controller - Ready!"
     echo "=========================================="
     echo
     echo "Services are now running:"
-    echo "  • Apache Guacamole: http://localhost:8080/guacamole"
-    echo "  • Nginx (HTTPS): https://localhost"
+    echo "  • Apache Guacamole: http://localhost:$GUACAMOLE_PORT/guacamole"
+    echo "  • Apache Guacamole (Network): http://$device_ip:$GUACAMOLE_PORT/guacamole"
     echo
     echo "Default login credentials:"
-    echo "  Username: guacadmin"
-    echo "  Password: guacadmin"
+    echo "  Username: $GUACAMOLE_ADMIN_USER"
+    echo "  Password: $GUACAMOLE_ADMIN_PASSWORD"
+    echo
+    echo "🌐 Access URLs:"
+echo "  Local Access:"
+echo "    • http://localhost:$GUACAMOLE_PORT/guacamole"
+echo "    • http://127.0.0.1:$GUACAMOLE_PORT/guacamole"
+echo
+echo "  Network Access (for other devices):"
+echo "    • http://$device_ip:$GUACAMOLE_PORT/guacamole"
+echo
+echo "📱 Mobile/Tablet Access:"
+echo "    • http://$device_ip:$GUACAMOLE_PORT/guacamole"
     echo
     echo "To connect to your Mac:"
-    echo "  1. Open your web browser"
-    echo "  2. Go to: http://localhost:8080/guacamole"
-    echo "  3. Login with the credentials above"
+echo "  1. Open your web browser"
+echo "  2. Go to: http://$device_ip:$GUACAMOLE_PORT/guacamole"
+echo "  3. Login with the credentials above"
     echo "  4. Add a new VNC connection:"
     echo "     - Protocol: VNC"
-    echo "     - Hostname: [Your Mac's IP]"
+    echo "     - Hostname: $device_ip"
     echo "     - Port: 5900"
     echo "     - Password: [Your VNC password]"
     echo
@@ -93,6 +125,12 @@ show_connection_info() {
     echo "  • Stop services: docker-compose down"
     echo "  • Restart services: docker-compose restart"
     echo "  • Network discovery: ./scripts/network-discovery.sh"
+    echo "  • Access info: ./scripts/get-access-info.sh"
+    echo
+    echo "💡 Tips:"
+echo "  • Other devices must be on the same network"
+echo "  • Make sure firewall allows port $GUACAMOLE_PORT"
+echo "  • For external access, configure port forwarding"
     echo
     echo "=========================================="
 }

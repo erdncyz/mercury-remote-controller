@@ -71,8 +71,7 @@ Thumbs.db
 .vimrc
 
 # ===== ENVIRONMENT & CONFIGURATION =====
-# Environment variables
-.env
+# Environment variables (keep .env.example)
 .env.local
 .env.development
 .env.test

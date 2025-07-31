@@ -4,11 +4,11 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:13
-    container_name: mercury-postgres
+    container_name: ${CONTAINER_PREFIX}-postgres
     environment:
-      POSTGRES_DB: guacamole_db
-      POSTGRES_USER: guacamole_user
-      POSTGRES_PASSWORD: mercury_secure_password_2024
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init:/docker-entrypoint-initdb.d
@@ -18,29 +18,29 @@ services:
 
   # Guacamole Daemon
   guacd:
-    image: guacamole/guacd:1.5.0
-    container_name: mercury-guacd
+    image: guacamole/guacd:${GUACD_VERSION}
+    container_name: ${CONTAINER_PREFIX}-guacd
     restart: unless-stopped
     networks:
       - mercury-network
 
   # Apache Guacamole Web Application
   guacamole:
-    image: guacamole/guacamole:1.5.0
-    container_name: mercury-guacamole
+    image: guacamole/guacamole:${GUACAMOLE_VERSION}
+    container_name: ${CONTAINER_PREFIX}-guacamole
     environment:
       GUACD_HOSTNAME: guacd
-      GUACD_PORT: 4822
-      POSTGRES_DATABASE: guacamole_db
-      POSTGRES_USER: guacamole_user
-      POSTGRES_PASSWORD: mercury_secure_password_2024
+      GUACD_PORT: ${GUACD_PORT}
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_HOSTNAME: postgres
     depends_on:
       - postgres
       - guacd
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "0.0.0.0:${GUACAMOLE_PORT}:8080"
     networks:
       - mercury-network
 

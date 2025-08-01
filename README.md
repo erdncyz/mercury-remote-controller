@@ -47,6 +47,12 @@ Perfect for:
 - **Version:** 4.0.0 or later
 - **Installation:** Follow official Docker installation guide
 
+**⚠️ Important for Apple Silicon (M1/M2) Macs:**
+- The project uses x86_64 Docker images for compatibility
+- Docker will automatically handle platform emulation
+- First startup may take longer due to image conversion
+- Performance is optimized for ARM64 native images
+
 #### 2. Git (Optional but Recommended)
 - **Download:** [Git](https://git-scm.com/downloads)
 - **Version:** 2.30.0 or later
@@ -338,6 +344,21 @@ Mercury Remote Controller/
 # macOS: Open Docker Desktop application
 # Windows: Start Docker Desktop from Start Menu
 # Linux: sudo systemctl start docker
+```
+
+**Problem:** "Platform mismatch" (Apple Silicon Macs)
+```bash
+# This warning is normal for M1/M2 Macs
+# The project uses x86_64 images for compatibility
+# Docker automatically handles platform emulation
+# No action needed - services will work normally
+```
+
+**Problem:** "Slow startup on Apple Silicon"
+```bash
+# First startup takes longer due to image conversion
+# Subsequent startups will be faster
+# Consider using ARM64 native images for better performance
 ```
 
 **Problem:** "Port already in use"

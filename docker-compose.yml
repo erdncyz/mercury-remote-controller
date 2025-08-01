@@ -4,6 +4,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:13
+    platform: linux/amd64
     container_name: ${CONTAINER_PREFIX}-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -19,6 +20,7 @@ services:
   # Guacamole Daemon
   guacd:
     image: guacamole/guacd:${GUACD_VERSION}
+    platform: linux/amd64
     container_name: ${CONTAINER_PREFIX}-guacd
     restart: unless-stopped
     networks:
@@ -27,6 +29,7 @@ services:
   # Apache Guacamole Web Application
   guacamole:
     image: guacamole/guacamole:${GUACAMOLE_VERSION}
+    platform: linux/amd64
     container_name: ${CONTAINER_PREFIX}-guacamole
     environment:
       GUACD_HOSTNAME: guacd
